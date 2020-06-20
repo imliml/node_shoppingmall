@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 
 const productRoute = require("./routes/products");
+const orderRoute = require("./routes/orders");
 
 // app.use((req, res) => {
 //   res.json({
@@ -13,6 +14,7 @@ const productRoute = require("./routes/products");
 // });
 
 app.use("/product", productRoute);
+app.use("/order", orderRoute);
 
 const PORT = 5000;
 
