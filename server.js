@@ -4,6 +4,9 @@ const express = require("express");
 //morgan을 불러와서 상수화
 const morgan = require("morgan");
 
+//body-parser 불러와서 상수화
+const bodyParser = require("body-parser");
+
 // express 일반적인 기능들을 상수화
 const app = express();
 
@@ -13,6 +16,8 @@ const orderRoute = require("./routes/orders");
 
 // 미들웨어 설정
 app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // 라우터 설정
 app.use("/product", productRoute);

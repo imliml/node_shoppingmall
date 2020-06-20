@@ -3,8 +3,14 @@ const router = express.Router();
 
 // product 데이터 생성 api
 router.post("/", (req, res) => {
+  const product = {
+    name: req.body.productName,
+    price: req.body.productPrice,
+  };
+
   res.json({
     message: "product posted",
+    createdProduct: product,
   });
 });
 
