@@ -1,18 +1,20 @@
 // express 를 불러와서 상수화
 const express = require("express");
 
+//morgan을 불러와서 상수화
+const morgan = require("morgan");
+
 // express 일반적인 기능들을 상수화
 const app = express();
 
+// 라우터파일 불러오기
 const productRoute = require("./routes/products");
 const orderRoute = require("./routes/orders");
 
-// app.use((req, res) => {
-//   res.json({
-//     message: "It works!",
-//   });
-// });
+// 미들웨어 설정
+app.use(morgan("dev"));
 
+// 라우터 설정
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
 
