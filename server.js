@@ -4,6 +4,12 @@ const express = require("express");
 // express 일반적인 기능들을 상수화
 const app = express();
 
+app.use((req, res) => {
+  res.json({
+    message: "It works!",
+  });
+});
+
 const PORT = 5000;
 
 // 서버를 실행하는 코드
