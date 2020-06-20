@@ -4,11 +4,15 @@ const express = require("express");
 // express 일반적인 기능들을 상수화
 const app = express();
 
-app.use((req, res) => {
-  res.json({
-    message: "It works!",
-  });
-});
+const productRoute = require("./routes/products");
+
+// app.use((req, res) => {
+//   res.json({
+//     message: "It works!",
+//   });
+// });
+
+app.use("/product", productRoute);
 
 const PORT = 5000;
 
