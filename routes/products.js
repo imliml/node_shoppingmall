@@ -52,6 +52,30 @@ router.get("/", (req, res) => {
   // });
 });
 
+// 상세 데이터 불러오는 api
+router.get("/:id", (req, res) => {
+  const productId = req.params.id; //url아이디를 params로 갖고와서 상수화
+  productModel
+    .findById(productId)
+    .then((doc) => {
+      if (doc) {
+        return res.json({
+          message: "successful product detail get",
+          productInfo: doc,
+        });
+      } else {
+        res.json({
+          message: "No product Id",
+        });
+      }
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
+});
+
 // product 데이터를 수정하는 api
 router.patch("/", (req, res) => {
   res.json({
