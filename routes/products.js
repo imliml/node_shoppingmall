@@ -1,17 +1,33 @@
 const express = require("express");
 const router = express.Router();
+const productModel = require("../model/product");
 
 // product 데이터 생성 api
 router.post("/", (req, res) => {
-  const product = {
+  //데이터를 productModel에 저장할 내용 정리
+  const product = new productModel({
     name: req.body.productName,
     price: req.body.productPrice,
-  };
-
-  res.json({
-    message: "product posted",
-    createdProduct: product,
   });
+
+  product
+    .save()
+    .then((result) => {
+      res.json({
+        message: "success product posted",
+        creagedProduct: result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
+
+  // res.json({
+  //   message: "product posted",
+  //   createdProduct: product,
+  // });
 });
 
 // product 데이터 불러오는 api
