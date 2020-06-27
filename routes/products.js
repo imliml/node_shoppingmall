@@ -15,7 +15,15 @@ router.post("/", (req, res) => {
     .then((result) => {
       res.json({
         message: "success product posted",
-        creagedProduct: result,
+        creagedProduct: {
+          id: result._id,
+          name: result.name,
+          price: result.price,
+          requset: {
+            type: "GET",
+            url: "http://localhost:5000/product/" + result._id,
+          },
+        },
       });
     })
     .catch((err) => {
@@ -35,11 +43,28 @@ router.get("/", (req, res) => {
   productModel
     .find()
     .then((docs) => {
-      res.json({
-        message: "product total get",
+      const response = {
         count: docs.length,
-        products: docs,
-      });
+        products: docs.map((doc) => {
+          return {
+            id: doc._id,
+            name: doc.name,
+            price: doc.price,
+            request: {
+              type: "GET",
+              url: "http://localhost:5000/product/" + doc._id,
+            },
+          };
+        }),
+      };
+
+      res.json(response);
+
+      // res.json({
+      //   message: "product total get",
+      //   count: docs.length,
+      //   products: docs,
+      // });
     })
     .catch((err) => {
       res.json({
@@ -61,7 +86,15 @@ router.get("/:id", (req, res) => {
       if (doc) {
         return res.json({
           message: "successful product detail get",
-          productInfo: doc,
+          productInfo: {
+            id: doc._id,
+            name: doc.name,
+            price: doc.price,
+            request: {
+              type: "GET",
+              url: "http://localhost:5000/product",
+            },
+          },
         });
       } else {
         res.json({
@@ -90,6 +123,10 @@ router.patch("/:id", (req, res) => {
     .then((result) => {
       res.json({
         message: "updated product",
+        request: {
+          type: "GET",
+          url: "http://localhost:5000/product/" + productId,
+        },
       });
     })
     .catch((err) => {
@@ -111,6 +148,10 @@ router.delete("/:id", (req, res) => {
     .then(() => {
       res.json({
         message: "product delete",
+        request: {
+          type: "GET",
+          url: "http://localhost:5000/product",
+        },
       });
     })
     .catch((err) => {
@@ -118,10 +159,6 @@ router.delete("/:id", (req, res) => {
         error: err.message,
       });
     });
-
-  res.json({
-    message: "product deleted",
-  });
 });
 
 // 라우터를 다른 파일에서도 불러올 수 있게 모듈화 한다.
