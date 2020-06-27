@@ -77,10 +77,30 @@ router.get("/:id", (req, res) => {
 });
 
 // product 데이터를 수정하는 api
-router.patch("/", (req, res) => {
-  res.json({
-    message: "product updated",
-  });
+router.patch("/:id", (req, res) => {
+  const productId = req.params.id;
+
+  const updatedOps = {};
+  for (const ops of req.body) {
+    updatedOps[ops.propName] = ops.value;
+  }
+
+  productModel
+    .findByIdAndUpdate(productId, { $set: updatedOps })
+    .then((result) => {
+      res.json({
+        message: "updated product",
+      });
+    })
+    .catch((err) => {
+      res.json({
+        message: err.message,
+      });
+    });
+
+  // res.json({
+  //   message: "product updated",
+  // });
 });
 
 // product 데이터를 삭제하는 api
