@@ -84,7 +84,21 @@ router.patch("/", (req, res) => {
 });
 
 // product 데이터를 삭제하는 api
-router.delete("/", (req, res) => {
+router.delete("/:id", (req, res) => {
+  const productId = req.params.id;
+  productModel
+    .findByIdAndDelete(productId)
+    .then(() => {
+      res.json({
+        message: "product delete",
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
+
   res.json({
     message: "product deleted",
   });
