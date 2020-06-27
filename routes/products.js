@@ -32,9 +32,24 @@ router.post("/", (req, res) => {
 
 // product 데이터 불러오는 api
 router.get("/", (req, res) => {
-  res.json({
-    message: "product get",
-  });
+  productModel
+    .find()
+    .then((docs) => {
+      res.json({
+        message: "product total get",
+        count: docs.length,
+        products: docs,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
+
+  // res.json({
+  //   message: "product get",
+  // });
 });
 
 // product 데이터를 수정하는 api
