@@ -7,6 +7,11 @@ const morgan = require("morgan");
 //body-parser 불러와서 상수화
 const bodyParser = require("body-parser");
 
+// dotenv 불러와서 상수화
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 // express 일반적인 기능들을 상수화
 const app = express();
 
@@ -26,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 // 서버를 실행하는 코드
-app.listen(PORT, console.log("server started"));
+app.listen(PORT, console.log(`server started at ${PORT}`));
