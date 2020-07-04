@@ -27,9 +27,21 @@ router.post("/", (req, res) => {
 
 // 4 order 데이터 불러오는 api
 router.get("/", (req, res) => {
-  res.json({
-    message: "order get",
-  });
+  orderModel
+    .find()
+    .populate("product", ["name", "price"])
+    .then((docs) => {
+      res.json({
+        message: "order total get",
+        count: docs.length,
+        orders: docs,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
 });
 
 // 5 order 데이터 수정하는 api
