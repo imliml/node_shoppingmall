@@ -18,6 +18,7 @@ const app = express();
 // 라우터파일 불러오기
 const productRoute = require("./routes/products");
 const orderRoute = require("./routes/orders");
+const userRoute = require("./routes/user");
 
 // db연결
 require("./config/database");
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // 라우터 설정
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
+app.use("/user", userRoute);
 
 const PORT = process.env.PORT;
 
