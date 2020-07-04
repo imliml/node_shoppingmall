@@ -1,12 +1,28 @@
 // 1
 const express = require("express");
 const router = express.Router();
+const orderModel = require("../model/order");
 
 // 3 order 데이터 생성 api
 router.post("/", (req, res) => {
-  res.json({
-    message: "order posted",
+  const order = new orderModel({
+    product: req.body.productId,
+    quantity: req.body.qty,
   });
+
+  order
+    .save()
+    .then((result) => {
+      res.json({
+        message: "order product",
+        orderProduct: result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
 });
 
 // 4 order 데이터 불러오는 api
