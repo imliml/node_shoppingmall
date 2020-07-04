@@ -21,7 +21,11 @@ const dbAddress =
   "mongodb+srv://admin:12345@cluster0-45mth.mongodb.net/shoppingmalldb?retryWrites=true&w=majority";
 
 mongoose
-  .connect(dbAddress, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(dbAddress, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: true,
+  })
   .then(() => console.log("MongoDb Connected ..."))
   .catch((err) => console.log(err));
 

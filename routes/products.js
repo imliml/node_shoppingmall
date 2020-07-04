@@ -140,7 +140,7 @@ router.patch("/:id", (req, res) => {
   // });
 });
 
-// product 데이터를 삭제하는 api
+// product 데이터를 제하는 api
 router.delete("/:id", (req, res) => {
   const productId = req.params.id;
   productModel
