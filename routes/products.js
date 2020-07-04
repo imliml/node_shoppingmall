@@ -15,11 +15,11 @@ router.post("/", (req, res) => {
     .then((result) => {
       res.json({
         message: "success product posted",
-        creagedProduct: {
+        createdProduct: {
           id: result._id,
           name: result.name,
           price: result.price,
-          requset: {
+          request: {
             type: "GET",
             url: "http://localhost:5000/product/" + result._id,
           },
