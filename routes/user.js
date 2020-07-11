@@ -79,7 +79,35 @@ router.post("/register", (req, res) => {
 });
 
 // 4 로그인
-router.post("/login", (req, res) => {});
+router.post("/login", (req, res) => {
+  // email 체크 -> password 체크 -> 로그인 완료 메시지
+
+  userModel
+    .findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        return res.json({
+          message: "No email info",
+        });
+      } else {
+        bcrypt.compare(req.body.password, user.password, (err, result) => {
+          if (err || result === false) {
+            return res.json({
+              message: "password incorrect",
+            });
+          } else {
+            console.log(user);
+            console.log(result);
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
+});
 
 // 2
 module.exports = router;
