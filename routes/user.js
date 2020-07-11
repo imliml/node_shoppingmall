@@ -82,7 +82,7 @@ router.post("/register", (req, res) => {
 
 // 4 로그인
 router.post("/login", (req, res) => {
-  // email 체크 -> password 체크 -> 로그인 완료 메시지
+  // email 체크 -> password 체크 -> 로그인 완료 메시지(token반환)
 
   userModel
     .findOne({ email: req.body.email })
