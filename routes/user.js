@@ -4,10 +4,11 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const checkAuth = require("../config/check-auth");
 const userModel = require("../model/user");
 
 // 3-1 전체user 불러오기
-router.get("/total", (req, res) => {
+router.get("/total", checkAuth, (req, res) => {
   userModel
     .find()
     .then((docs) => {

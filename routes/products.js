@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const productModel = require("../model/product");
+const checkAuth = require("../config/check-auth");
 
 // product 데이터 생성 api
-router.post("/", (req, res) => {
+router.post("/", checkAuth, (req, res) => {
   //데이터를 productModel에 저장할 내용 정리
   const product = new productModel({
     name: req.body.productName,
@@ -78,7 +79,7 @@ router.get("/", (req, res) => {
 });
 
 // 상세 데이터 불러오는 api
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const productId = req.params.id; //url아이디를 params로 갖고와서 상수화
   productModel
     .findById(productId)
@@ -110,7 +111,7 @@ router.get("/:id", (req, res) => {
 });
 
 // product 데이터를 수정하는 api
-router.patch("/:id", (req, res) => {
+router.patch("/:id", checkAuth, (req, res) => {
   const productId = req.params.id;
 
   const updatedOps = {};
@@ -141,7 +142,7 @@ router.patch("/:id", (req, res) => {
 });
 
 // product 데이터를 제하는 api
-router.delete("/:id", (req, res) => {
+router.delete("/:id", checkAuth, (req, res) => {
   const productId = req.params.id;
   productModel
     .findByIdAndDelete(productId)

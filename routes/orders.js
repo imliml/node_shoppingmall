@@ -2,9 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const orderModel = require("../model/order");
+const checkAuth = require("../config/check-auth");
 
 // 3 order 데이터 생성 api
-router.post("/", (req, res) => {
+router.post("/", checkAuth, (req, res) => {
   const order = new orderModel({
     product: req.body.productId,
     quantity: req.body.qty,
@@ -34,7 +35,7 @@ router.post("/", (req, res) => {
 });
 
 // 4 order 데이터 불러오는 api
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   orderModel
     .find()
     .populate("product", ["name", "price"]) // product의 하위 메뉴를 보여줌.
@@ -63,7 +64,7 @@ router.get("/", (req, res) => {
 });
 
 // 4-1 디테일한 order 데이터를 불러오는 api
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const orderId = req.params.id;
 
   orderModel
@@ -90,7 +91,7 @@ router.get("/:id", (req, res) => {
 });
 
 // 5 order 데이터 수정하는 api
-router.patch("/:id", (req, res) => {
+router.patch("/:id", checkAuth, (req, res) => {
   const orderId = req.params.id;
 
   const updatedOps = {};
@@ -117,7 +118,7 @@ router.patch("/:id", (req, res) => {
 });
 
 // 6 order 데이터 삭제하는 api
-router.delete("/:id", (req, res) => {
+router.delete("/:id", checkAuth, (req, res) => {
   const orderId = req.params.id;
 
   orderModel
