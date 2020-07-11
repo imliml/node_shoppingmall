@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 const userModel = require("../model/user");
 
 // 3-1 전체user 불러오기
@@ -96,8 +98,18 @@ router.post("/login", (req, res) => {
               message: "password incorrect",
             });
           } else {
-            console.log(user);
-            console.log(result);
+            const token = jwt.sign(
+              {
+                email: user.email,
+                userId: user._id,
+              },
+              "secret",
+              { expiresIn: "1h" }
+            );
+            res.json({
+              message: "Auth successful",
+              tokenInfo: token,
+            });
           }
         });
       }
