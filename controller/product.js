@@ -39,10 +39,12 @@ exports.products_get_all = (req, res) => {
 };
 
 exports.products_register_product = (req, res) => {
+  const { name, price } = req.body;
+
   //데이터를 productModel에 저장할 내용 정리
   const product = new productModel({
-    name: req.body.productName,
-    price: req.body.productPrice,
+    name,
+    price,
   });
 
   product
