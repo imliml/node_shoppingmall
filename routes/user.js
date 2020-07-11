@@ -4,6 +4,22 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const userModel = require("../model/user");
 
+// 3-1 전체user 불러오기
+router.get("/total", (req, res) => {
+  userModel
+    .find()
+    .then((docs) => {
+      res.json({
+        userInfos: docs,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err.message,
+      });
+    });
+});
+
 // 3 회원가입
 router.post("/register", (req, res) => {
   // 이메일 체크유무 확인 from database
