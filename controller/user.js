@@ -99,7 +99,7 @@ exports.user_login = (req, res) => {
                 email: user.email,
                 userId: user._id,
               },
-              "secret",
+              process.env.SECRET_KEY,
               { expiresIn: "1h" }
             );
             res.json({
